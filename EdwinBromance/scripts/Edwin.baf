@@ -1,0 +1,290 @@
+// -------------------------------------------
+// Edwin Friendship Talks
+// -------------------------------------------
+// Dialogue Start
+IF
+    InParty(Myself)
+    Global("g_EdwinFriendship","GLOBAL",0)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("g_EdwinFriendshipTalksTimer","GLOBAL",2400) //CHANGE BACK TO 1200 LATER
+    SetGlobal("g_EdwinFriendTalks","GLOBAL",1)
+    SetGlobal("g_EdwinFriendship","GLOBAL",1)
+END
+
+
+//////////////////////////////////////////////
+// 3 Timered Talks
+////////////////////////////////////////////////
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    RealGlobalTimerExpired("g_EdwinFriendshipTalksTimer","GLOBAL")
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("g_EdwinFriendship","GLOBAL",1)
+	OR(3)
+    Global("g_EdwinFriendTalks","GLOBAL",1) 
+    Global("g_EdwinFriendTalks","GLOBAL",3) 
+    Global("g_EdwinFriendTalks","GLOBAL",5) 
+
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("g_edBro")
+    Dialogue(Player1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    RealGlobalTimerExpired("g_EdwinFriendshipTalksTimer","GLOBAL")
+    Global("g_EdwinFriendship","GLOBAL",1)
+    OR(2)
+      Global("g_EdwinFriendTalks","GLOBAL",2) 
+      Global("g_EdwinFriendTalks","GLOBAL",4) 
+THEN
+ RESPONSE #100
+   IncrementGlobal("g_EdwinFriendTalks","GLOBAL",1)
+END
+
+
+//////////////////////////////////////////////
+// Fourth talk - Edwina
+////////////////////////////////////////////////
+
+
+IF
+    InParty(Myself)
+    See(Player1)
+    Global("g_EdwinFriendEdwina","GLOBAL",0)
+    !Gender("Edwin",MALE)
+THEN
+  RESPONSE #100
+    IncrementGlobal("g_EdwinFriendEdwina","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    Global("g_EdwinFriendEdwina","GLOBAL",1)
+THEN
+  RESPONSE #100
+    IncrementGlobal("g_EdwinFriendEdwina","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck("Edwin",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    RealGlobalTimerExpired("g_EdwinFriendshipTalksTimer","GLOBAL")
+    !See([ENEMY])
+    !Gender("Edwin",MALE)
+    Global("g_EdwinFriendEdwina","GLOBAL",2)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("g_edBro")
+    MoveToObject(Player1)
+    Dialogue(Player1)
+END
+
+
+//////////////////////////////////////////////
+// Fifth talk - Degardiaganananan Defeated
+////////////////////////////////////////////////
+IF
+    InParty(Myself)
+    See(Player1)
+    Dead("Degard")
+    Global("g_EdwinFriendDegard","GLOBAL",0)
+THEN
+  RESPONSE #100
+    IncrementGlobal("g_EdwinFriendDegard","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    Global("g_EdwinFriendDegard","GLOBAL",1)
+THEN
+  RESPONSE #100
+    IncrementGlobal("g_EdwinFriendDegard","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck("Edwin",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("g_EdwinFriendDegard","GLOBAL",2)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("g_edBro")
+    MoveToObject(Player1)
+    Dialogue(Player1)
+END
+
+
+
+
+//////////////////////////////////////////////
+// Sixth talk - Brynnlaw
+////////////////////////////////////////////////
+IF
+    InParty(Myself)
+    See(Player1)
+    AreaCheck("AR1600")
+    Global("g_EdwinFriendBrynn","GLOBAL",0)
+THEN
+  RESPONSE #100
+    IncrementGlobal("g_EdwinFriendBrynn","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    AreaCheck("AR1600")
+    Global("g_EdwinFriendBrynn","GLOBAL",1)
+THEN
+  RESPONSE #100
+    IncrementGlobal("g_EdwinFriendBrynn","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck("Edwin",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("g_EdwinFriendBrynn","GLOBAL",2)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("g_edBro")
+    MoveToObject(Player1)
+    Dialogue(Player1)
+END
+
+
+//////////////////////////////////////////////
+// Seventh talk - IN THE UNDERDARK
+////////////////////////////////////////////////
+
+IF
+    InParty(Myself)
+    See(Player1)
+    AreaCheck("AR2100")
+    Global("g_EdwinFriendUnder","GLOBAL",0)
+THEN
+  RESPONSE #100
+    IncrementGlobal("g_EdwinFriendUnder","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck("Edwin",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("g_EdwinFriendUnder","GLOBAL",1)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("g_edBro")
+    MoveToObject(Player1)
+    Dialogue(Player1)
+END
+
+
+
+//////////////////////////////////////////////
+// Eigththth talk - Bodhi Defeated
+////////////////////////////////////////////////
+IF
+    InParty(Myself)
+    Dead("c6bodhi")
+    Global("g_EdwinFriendBodhi","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("g_EdwinFriendBodhi","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    CombatCounter(0)
+    !See([ENEMY])
+    Dead("c6bodhi")
+    See(Player1)
+    Global("g_EdwinFriendBodhi","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("g_EdwinFriendBodhi","GLOBAL",2)
+END
+
+IF
+    InParty(Myself)
+    CombatCounter(0)
+    !See([ENEMY])
+    See(Player1)
+    Global("g_EdwinFriendBodhi","GLOBAL",2)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("g_edBro")
+    MoveToObject(Player1)
+    Dialogue(Player1)
+END
+
+
+//////////////////////////////////////////////
+// Ninth talk - Suldy
+////////////////////////////////////////////////
+
+IF
+    InParty(Myself)
+    See(Player1)
+    RealGlobalTimerExpired("g_EdwinFriendTalksTimer","GLOBAL")
+    AreaCheck("AR2800")
+    Global("g_EdwinFriendSuld","GLOBAL",0)
+    GlobalGT("g_EdwinLikesPC","GLOBAL",4)
+THEN
+  RESPONSE #100
+    IncrementGlobal("g_EdwinFriendSuld","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    AreaCheck("AR2800")
+    Global("g_EdwinFriendSuld","GLOBAL",1)
+THEN
+  RESPONSE #100
+    IncrementGlobal("g_EdwinFriendSuld","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck("Edwin",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("g_EdwinFriendSuld","GLOBAL",2)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("g_edBro")
+    MoveToObject(Player1)
+    Dialogue(Player1)
+END
