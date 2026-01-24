@@ -1,67 +1,73 @@
 // --------------------------------------
 // Edwin Bromance Setup
 //
-// Version:   V0.5
+// Version:   1.3
 // Author(s): Glittergear
 // --------------------------------------
 // Backup directory
-BACKUP ~EdwinBromance/backup~
+BACKUP ~weidu_external/EdwinBromance/backup~
 
 // Error reports sent to Glittergear
 //AUTHOR ~Glittergear~
 SUPPORT ~Message me on G3 or Discord~
 
 // Version
-VERSION ~v0.5~
+VERSION ~1.3~
 
 
-// Translations
-AUTO_TRA ~EdwinBromance/translations/%s~
+README ~EdwinBromance/EdwinBromance.txt~
 
 ALWAYS
 
-	/* eet compatibility */
-	ACTION_IF GAME_IS ~eet~ BEGIN
-		OUTER_SET bg2_chapter = 12
-	END ELSE BEGIN
-		OUTER_SET bg2_chapter = 0
-	END
-	OUTER_FOR (i=1; i<=10; i=i+1) BEGIN
-		OUTER_SET bg2_chapter = bg2_chapter + 1
-		OUTER_SPRINT name_source ~bg2_chapter_%i%~
-		OUTER_SET EVAL ~%name_source%~ = bg2_chapter
-	END
+    //Copies tra files into the autotra-folder (to leave the originals untouched)
+    DEFINE_ACTION_FUNCTION autotra_workaround BEGIN
+      COPY ~EdwinBromance/Languages/english~			~weidu_external/EdwinBromance/Languages/autotra/%LANGUAGE%~
+      COPY ~EdwinBromance/Languages/%LANGUAGE%~			~weidu_external/EdwinBromance/Languages/autotra/%LANGUAGE%~
+    END
 
-	/* Converts tra files to UTF-8 */
-	// No exception, everything needs to be converted
-	ACTION_DEFINE_ARRAY EdBrooconvert BEGIN END
+    LAF autotra_workaround END
 
-	// any tra files used in LANGUAGE need to be reloaded after UTF-8 conversion
-	ACTION_DEFINE_ARRAY EdBroreload BEGIN setup END
+// Convert tra files in UTF8 if EE and let them in ANSI if oBG
 
-	LAF HANDLE_CHARSETS
-		INT_VAR
-			infer_charsets = 1
-		STR_VAR
-			tra_path = EVAL ~%MOD_FOLDER%/translations~
-			noconvert_array = EdBrooconvert
-			reload_array = EdBroreload
+	ACTION_IF GAME_IS ~bg2ee eet~ BEGIN
+//  ACTION_DEFINE_ARRAY EdwinBromance_noconvert BEGIN install END
+
+		ACTION_DEFINE_ARRAY EdwinBromance_reload BEGIN setup END
+
+			LAF HANDLE_CHARSETS
+				INT_VAR
+				infer_charsets = 1
+				STR_VAR
+				tra_path = EVAL ~weidu_external/EdwinBromance/Languages/autotra~
+				out_path = EVAL ~weidu_external/EdwinBromance/Languages/autotra/UTF8~
+				iconv_path = ~EdwinBromance/Languages/autotra/iconv~
+//				 noconvert_array = EdwinBromance_noconvert
+				reload_array = EdwinBromance_reload
+			END
+
+	// UTF8 only
+	COPY ~weidu_external/EdwinBromance/Languages/autotra/UTF8/%LANGUAGE%~				~weidu_external/EdwinBromance/Languages/autotra/%LANGUAGE%~
 	END
 
 END
 
 
+// Translations
+AUTO_TRA ~weidu_external/EdwinBromance/Languages/autotra/%s~
+
+
 LANGUAGE ~English~
          ~English~
-         ~EdwinBromance/translations/english/setup.tra~
+         ~EdwinBromance/Languages/english/setup.tra~
 
 /* =================================== *
  *    Edwin Bromance  for BG2: ToB    *
  * =================================== */
 
 BEGIN @0
-REQUIRE_PREDICATE GAME_IS ~bg2ee tob bgt eet~ @1 /* ToB is not installed! Please install the Throne of Bhaal expansion before installing the Edwin Bromance. */
-DESIGNATED 0 LABEL ~Edwin_Bromance~
+DESIGNATED 0
+LABEL ~Edwin_Bromance-Glittergear~
+REQUIRE_PREDICATE GAME_IS ~bg2ee tob bgt eet~ @1 /* Need ToB, BGT, BG2EE or EET. */
 
 /* CamDawg's custom IsValidForPartyDialogue() state. Thanks Cam!
    covers STATE_CONFUSED, STATE_FEEBLEMINDED, STATE_SILENCED, STATE_DEAD, STATE_ACID_DEATH, STATE_FLAME_DEATH, STATE_EXPLODING_DEATH, STATE_STONE_DEATH, STATE_FROZEN_DEATH, STATE_HELPLESS, STATE_STUNNED, STATE_PANIC, STATE_BERSERK, STATE_SLEEPING */
