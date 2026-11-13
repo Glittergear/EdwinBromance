@@ -60,6 +60,10 @@ LANGUAGE ~English~
          ~English~
          ~EdwinBromance/Languages/english/setup.tra~
 
+LANGUAGE ~Schinese~
+         ~schinese~
+         ~EdwinBromance/Languages/schinese/setup.tra~
+
 /* =================================== *
  *    Edwin Bromance  for BG2: ToB    *
  * =================================== */
@@ -78,11 +82,11 @@ APPEND ~STATE.IDS~ ~0x80101FEF CD_STATE_NOTVALID~ UNLESS ~CD_STATE_NOTVALID~
 // Dialogues
 // ----------
 COMPILE ~EdwinBromance/dialogue/edwinj.d~
- // USING ~EdwinBromance/translations/english/edwinj.tra~
+ // USING ~EdwinBromance/translations/%LANGUAGE%/edwinj.tra~
  //       ~EdwinBromance/translations/%s/mazzyj.tra~
 
 // COMPILE ~EdwinBromance/dialogue/edwin25j.d~
- // USING ~EdwinBromance/translations/english/edwin25j.tra~
+ // USING ~EdwinBromance/translations/%LANGUAGE%/edwin25j.tra~
  //       ~EdwinBromance/translations/%s/edwin25j.tra~
 
 
