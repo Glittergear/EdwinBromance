@@ -30,9 +30,9 @@ ALWAYS
 // Convert tra files in UTF8 if EE and let them in ANSI if oBG
 
 	ACTION_IF GAME_IS ~bg2ee eet~ BEGIN
-//  ACTION_DEFINE_ARRAY EdwinBromance_noconvert BEGIN install END
-
-		ACTION_DEFINE_ARRAY EdwinBromance_reload BEGIN setup END
+	
+		ACTION_DEFINE_ARRAY EdwinBromance_noconvert BEGIN setup END
+		ACTION_DEFINE_ARRAY EdwinBromance_reload BEGIN END
 
 			LAF HANDLE_CHARSETS
 				INT_VAR
@@ -60,6 +60,10 @@ LANGUAGE ~English~
          ~English~
          ~EdwinBromance/Languages/english/setup.tra~
 
+LANGUAGE ~Simplified Chinese~
+         ~schinese~
+         ~EdwinBromance/Languages/schinese/setup.tra~
+
 /* =================================== *
  *    Edwin Bromance  for BG2: ToB    *
  * =================================== */
@@ -78,11 +82,11 @@ APPEND ~STATE.IDS~ ~0x80101FEF CD_STATE_NOTVALID~ UNLESS ~CD_STATE_NOTVALID~
 // Dialogues
 // ----------
 COMPILE ~EdwinBromance/dialogue/edwinj.d~
- // USING ~EdwinBromance/translations/english/edwinj.tra~
+ // USING ~EdwinBromance/translations/%LANGUAGE%/edwinj.tra~
  //       ~EdwinBromance/translations/%s/mazzyj.tra~
 
 // COMPILE ~EdwinBromance/dialogue/edwin25j.d~
- // USING ~EdwinBromance/translations/english/edwin25j.tra~
+ // USING ~EdwinBromance/translations/%LANGUAGE%/edwin25j.tra~
  //       ~EdwinBromance/translations/%s/edwin25j.tra~
 
 
