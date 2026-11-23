@@ -30,9 +30,9 @@ ALWAYS
 // Convert tra files in UTF8 if EE and let them in ANSI if oBG
 
 	ACTION_IF GAME_IS ~bg2ee eet~ BEGIN
-//  ACTION_DEFINE_ARRAY EdwinBromance_noconvert BEGIN install END
-
-		ACTION_DEFINE_ARRAY EdwinBromance_reload BEGIN setup END
+	
+		ACTION_DEFINE_ARRAY EdwinBromance_noconvert BEGIN setup END
+		ACTION_DEFINE_ARRAY EdwinBromance_reload BEGIN END
 
 			LAF HANDLE_CHARSETS
 				INT_VAR
@@ -60,7 +60,7 @@ LANGUAGE ~English~
          ~English~
          ~EdwinBromance/Languages/english/setup.tra~
 
-LANGUAGE ~Schinese~
+LANGUAGE ~Simplified Chinese~
          ~schinese~
          ~EdwinBromance/Languages/schinese/setup.tra~
 
